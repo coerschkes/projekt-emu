@@ -1,4 +1,4 @@
-import gui.BasisControl;
+import gui.BaseControl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -7,7 +7,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage){
-		new BasisControl(primaryStage);
+		new BaseControl(primaryStage);
     }	
 	
 	public static void main(String... args){

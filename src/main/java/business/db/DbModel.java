@@ -2,12 +2,10 @@ package business.db;
 
 import javafx.collections.*;
 
-import java.io.*;
 import java.sql.*;
-import java.util.concurrent.TimeUnit;
 
-import business.Messreihe;
-import business.Messung;
+import business.MeasurementSeries;
+import business.Measurement;
 
 public final class DbModel {
 	
@@ -23,48 +21,48 @@ public final class DbModel {
 	private DbModel(){		
 	}
 	
-	private DbAktionen dbAktionen = new DbAktionen();
+	private DbActions dbActions = new DbActions();
 	
 	// wird zukuenftig noch instanziiert
-	private ObservableList<Messreihe> messreihen = null; 
+	private ObservableList<MeasurementSeries> measurementSeriesList = null;
 	
-	public Messung[] leseMessungenAusDb(int messreihenId)
+	public Measurement[] readMeasurementsFromDb(int measurementSeriesId)
 		throws ClassNotFoundException, SQLException{
-		Messung[] ergebnis = null;
-		this.dbAktionen.connectDb();
-		ergebnis = this.dbAktionen.leseMessungen(messreihenId);
-		this.dbAktionen.closeDb();
-		return ergebnis;
+		Measurement[] result = null;
+		this.dbActions.connectDb();
+		result = this.dbActions.readMeasurement(measurementSeriesId);
+		this.dbActions.closeDb();
+		return result;
 	} 
 	
-	public void speichereMessungInDb(int messreihenId, Messung messung)
+	public void saveMeasurement(int measurementSeriesId, Measurement measurement)
 		throws ClassNotFoundException, SQLException{
-		this.dbAktionen.connectDb();
-		this.dbAktionen.fuegeMessungEin(messreihenId, messung);
-		this.dbAktionen.closeDb();
+		this.dbActions.connectDb();
+		this.dbActions.addMeasurement(measurementSeriesId, measurement);
+		this.dbActions.closeDb();
 	} 
 	
-	public void leseMessreihenInklusiveMessungenAusDb()
+	public void readAllMeasurementSeries()
 		throws ClassNotFoundException, SQLException{
-		this.dbAktionen.connectDb();
-		Messreihe[] messreihenAusDb 
-		    = this.dbAktionen.leseMessreihenInklusiveMessungen(); 
-		this.dbAktionen.closeDb();
-		int anzahl = this.messreihen.size();
-		for(int i = 0; i < anzahl; i++){
-		    this.messreihen.remove(0);
+		this.dbActions.connectDb();
+		MeasurementSeries[] allMeasurementSeries
+		    = this.dbActions.readAllMeasurementSeries();
+		this.dbActions.closeDb();
+		int count = this.measurementSeriesList.size();
+		for(int i = 0; i < count; i++){
+		    this.measurementSeriesList.remove(0);
 		}
-		for(int i = 0; i < messreihenAusDb.length; i++){
-			this.messreihen.add(messreihenAusDb[i]);
+		for(int i = 0; i < allMeasurementSeries.length; i++){
+			this.measurementSeriesList.add(allMeasurementSeries[i]);
 		} 
 	}
 		  
-	public void speichereMessreiheInDb(Messreihe messreihe)
+	public void saveMeasurementSeries(MeasurementSeries measurementSeries)
 	  	throws ClassNotFoundException, SQLException{
-	  	this.dbAktionen.connectDb();
-	  	this.dbAktionen.fuegeMessreiheEin(messreihe);
-	  	this.dbAktionen.closeDb();
-	  	this.messreihen.add(messreihe);
+	  	this.dbActions.connectDb();
+	  	this.dbActions.addMeasurementSeries(measurementSeries);
+	  	this.dbActions.closeDb();
+	  	this.measurementSeriesList.add(measurementSeries);
 	} 	
  
  }
