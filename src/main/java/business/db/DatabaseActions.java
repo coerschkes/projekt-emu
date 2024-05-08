@@ -39,15 +39,12 @@ public class DatabaseActions {
     }
 
     private <T> T executeQuery(final String query, final Function<ResultSet, T> resultSetTransformer, final String method) {
+        this.connectDatabase();
         try (final Statement statement = this.connection.createStatement()) {
-            this.connection.connect();
             final ResultSet resultSet = statement.executeQuery(query);
             return resultSetTransformer.apply(resultSet);
         } catch (SQLException e) {
             LOGGER.error("Exception in " + method, e);
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("Exception in loading the sql driver class", e);
             throw new RuntimeException(e);
         } finally {
             this.connection.closeConnection();
@@ -55,17 +52,26 @@ public class DatabaseActions {
     }
 
     private void executeUpdate(final String query, final String method) {
+        this.connectDatabase();
         try (final Statement statement = this.connection.createStatement()) {
-            this.connection.connect();
             statement.executeUpdate(query);
+        } catch (SQLException e) {
+            LOGGER.error("Exception in " + method, e);
+            throw new RuntimeException(e);
+        } finally {
+            this.connection.closeConnection();
+        }
+    }
+
+    private void connectDatabase() {
+        try {
+            this.connection.connect();
         } catch (SQLException e) {
             LOGGER.error("Exception in addMeasurementSeries", e);
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             LOGGER.error("Exception in loading the sql driver class", e);
             throw new RuntimeException(e);
-        } finally {
-            this.connection.closeConnection();
         }
     }
 }
