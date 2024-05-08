@@ -26,6 +26,7 @@ public class BaseControl {
  		catch(NumberFormatException nfExc){
  			baseView.showErrorMessage(
  				"Das Format der eingegebenen MessreihenId ist nicht korrekt.");
+			 nfExc.printStackTrace();
  		}
  		try{
  			result = this.dbModel.readMeasurementsFromDb(parsedMeasurementSeriesId);
@@ -33,6 +34,7 @@ public class BaseControl {
  		catch(ClassNotFoundException cnfExc){
  			baseView.showErrorMessage(
  				"Fehler bei der Verbindungerstellung zur Datenbank.");
+			 cnfExc.printStackTrace();
  		}
  		catch(SQLException sqlExc){
  			baseView.showErrorMessage(
@@ -49,10 +51,12 @@ public class BaseControl {
  		catch(ClassNotFoundException cnfExc){
  			baseView.showErrorMessage(
  				"Fehler bei der Verbindungerstellung zur Datenbank.");
+			 cnfExc.printStackTrace();
  		}
  		catch(SQLException sqlExc){
  			baseView.showErrorMessage(
  				"Fehler beim Zugriff auf die Datenbank.");
+			 sqlExc.printStackTrace();
  		}
 	} 
   	
