@@ -9,17 +9,12 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.function.Function;
 
-//todo: refactor
 public class ResultTransformer {
     public static Measurement[] toMeasurements(final ResultSet resultSet) {
         try {
             final Vector<Measurement> measurements = new Vector<Measurement>();
             while (resultSet.next()) {
-                measurements.add(
-                        new Measurement(
-                                Integer.parseInt(resultSet.getString(1)),
-                                Double.parseDouble(resultSet.getString(2)),
-                                Long.parseLong(resultSet.getString(3))));
+                measurements.add(measurementFrom(resultSet));
             }
             resultSet.close();
             return measurements.toArray(new Measurement[0]);
@@ -30,12 +25,9 @@ public class ResultTransformer {
 
     public static MeasurementSeries[] toMeasurementSeries(final ResultSet resultSet, final Function<MeasurementSeries, Measurement[]> callback) {
         try {
-            ArrayList<MeasurementSeries> allMeasurementSeries = new ArrayList<MeasurementSeries>();
+            ArrayList<MeasurementSeries> allMeasurementSeries = new ArrayList<>();
             while (resultSet.next()) {
-                allMeasurementSeries.add(
-                        new MeasurementSeries(Integer.parseInt(resultSet.getString(1)),
-                                Integer.parseInt(resultSet.getString(2)),
-                                resultSet.getString(3), resultSet.getString(4)));
+                allMeasurementSeries.add(measurementSeriesFrom(resultSet));
             }
             for (MeasurementSeries measurementSeries : allMeasurementSeries) {
                 measurementSeries.setMeasurements(callback.apply(measurementSeries));
@@ -45,5 +37,18 @@ public class ResultTransformer {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Measurement measurementFrom(ResultSet resultSet) throws SQLException {
+        return new Measurement(
+                Integer.parseInt(resultSet.getString(1)),
+                Double.parseDouble(resultSet.getString(2)),
+                Long.parseLong(resultSet.getString(3)));
+    }
+
+    private static MeasurementSeries measurementSeriesFrom(ResultSet resultSet) throws SQLException {
+        return new MeasurementSeries(Integer.parseInt(resultSet.getString(1)),
+                Integer.parseInt(resultSet.getString(2)),
+                resultSet.getString(3), resultSet.getString(4));
     }
 }
