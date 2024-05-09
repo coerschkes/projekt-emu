@@ -10,6 +10,22 @@ public class EmuConnector {
         this.daemon = new EmuDaemon();
     }
 
+    public void connect() throws FTDIException {
+        this.daemon.setConnected(true);
+        this.daemon.start();
+        this.daemon.getDevice().write(EmuRequest.START_COMMUNICATION.getByteArray());
+        this.daemon.setCallback(() -> "Connection Successful");
+        System.out.println("Establishing connection to device..");
+    }
+
+    public void disconnect() throws FTDIException {
+        this.daemon.setConnected(false);
+        this.daemon.getDevice().write(EmuRequest.END_COMMUNICATION.getByteArray());
+        this.daemon.getDevice().close();
+        System.out.println("End of device communication");
+
+    }
+
     public void printBuffer() {
         System.out.println(this.getBufferValue());
     }
@@ -21,22 +37,6 @@ public class EmuConnector {
     public void clearBuffer() {
         this.daemon.getBuffer().setLength(0);
         System.out.println("buffer cleared");
-    }
-
-    public void disconnect() throws FTDIException {
-        this.daemon.setConnected(false);
-        this.daemon.getDevice().write(EmuRequest.END_COMMUNICATION.getByteArray());
-        this.daemon.getDevice().close();
-        System.out.println("End of device communication");
-
-    }
-
-    public void connect() throws FTDIException {
-        this.daemon.setConnected(true);
-        this.daemon.start();
-        this.daemon.getDevice().write(EmuRequest.START_COMMUNICATION.getByteArray());
-        this.daemon.setCallback(() -> "Connection Successful");
-        System.out.println("Establishing connection to device..");
     }
 
     public void sendProgrammingMode() throws FTDIException {
