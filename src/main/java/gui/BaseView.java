@@ -1,9 +1,7 @@
 package gui;
 
-import business.model.Measurement;
 import business.db.DatabaseModel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import business.model.Measurement;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -63,22 +61,17 @@ public class BaseView {
     }
 
     private void initListener() {
-        buttonReadMeasurementsFromDb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Measurement[] resultMeasurements = baseControl.readMeasurements(textMeasurementSeriesId.getText());
-                String result = "";
-                for (int i = 0; i < resultMeasurements.length; i++) {
-                    result = result + resultMeasurements[i].getAttributes() + " / ";
-                }
-                textDisplay.setText(result);
+        buttonReadMeasurementsFromDb.setOnAction(e -> {
+            final Measurement[] resultMeasurements = baseControl.readMeasurements(textMeasurementSeriesId.getText());
+            final StringBuilder result = new StringBuilder();
+            for (Measurement resultMeasurement : resultMeasurements) {
+                result.append(resultMeasurement.getAttributes()).append(" / ");
             }
+            textDisplay.setText(result.toString());
         });
-        buttonReadMeasurementFromEMU.setOnAction(aEvent -> {
-            textDisplay.setText(baseControl
-                    .readMeasurementFromEmu(textMeasurementSeriesId.getText(),
-                            textMeasurementId.getText()).getAttributes());
-        });
+        buttonReadMeasurementFromEMU.setOnAction(event -> textDisplay.setText(baseControl
+                .readMeasurementFromEmu(textMeasurementSeriesId.getText(),
+                        textMeasurementId.getText()).getAttributes()));
     }
 
     void showErrorMessage(String message) {

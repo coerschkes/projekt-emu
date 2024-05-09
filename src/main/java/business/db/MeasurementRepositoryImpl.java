@@ -2,8 +2,6 @@ package business.db;
 
 import business.model.Measurement;
 import business.model.MeasurementSeries;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -5,6 +5,7 @@ import com.sun.org.slf4j.internal.LoggerFactory;
 
 import java.sql.*;
 
+@SuppressWarnings("SqlSourceToSinkFlow")
 class MysqlConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(MysqlConnector.class);
     private Connection connection;
