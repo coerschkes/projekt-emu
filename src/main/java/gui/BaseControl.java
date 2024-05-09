@@ -1,37 +1,38 @@
 package gui;
 
 import business.Measurement;
-import business.db.DbModel;
+import business.db.DatabaseModel;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BaseControl {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseControl.class);
-    private final DbModel dbModel;
+    private final DatabaseModel databaseModel;
     private final BaseView baseView;
 
-    public BaseControl(Stage primaryStage) {
-        this.dbModel = DbModel.getInstance();
-        this.baseView = new BaseView(this, primaryStage, this.dbModel);
+    public BaseControl(final Stage primaryStage) {
+        this.databaseModel = DatabaseModel.getInstance();
+        this.baseView = new BaseView(this, primaryStage, this.databaseModel);
         primaryStage.show();
     }
 
-    public Measurement[] readMeasurements(String measurementSeriesId) {
+    public Measurement[] readMeasurements(final String measurementSeriesId) {
         try {
-            return this.callDbModelQuery(dbModel1 -> dbModel1.readMeasurementsFromDb(Integer.parseInt(measurementSeriesId)));
-        } catch (NumberFormatException e) {
-            baseView.showErrorMessage("Das Format der eingegebenen MessreihenId ist nicht korrekt.");
-            throw e;
+            return this.databaseModel.readMeasurementsFromDb(Integer.parseInt(measurementSeriesId));
+        } catch (Exception e) {
+            throw this.wrapExceptionInstance(e);
         }
     }
 
     private void saveMeasurement(int measurementSeriesId, Measurement measurement) {
-        this.callDbModelUpdate(dbModel1 -> dbModel1.saveMeasurement(measurementSeriesId, measurement));
+        try {
+            this.databaseModel.saveMeasurement(measurementSeriesId, measurement);
+        } catch (Exception e) {
+            throw this.wrapExceptionInstance(e);
+        }
     }
 
     public Measurement readMeasurementFromEmu(String measurementSeriesId, String measurementId) {
@@ -46,29 +47,15 @@ public class BaseControl {
         return result;
     }
 
-    private <T> T callDbModelQuery(final Function<DbModel, T> transformer) {
-        try {
-            return transformer.apply(this.dbModel);
-        } catch (RuntimeException e) {
-            throw this.showErrorBasedOnException(e);
-        }
-    }
-
-    private void callDbModelUpdate(final Consumer<DbModel> modelConsumer) {
-        try {
-            modelConsumer.accept(this.dbModel);
-        } catch (RuntimeException e) {
-            throw this.showErrorBasedOnException(e);
-        }
-    }
-
-    private RuntimeException showErrorBasedOnException(final RuntimeException e) {
+    private RuntimeException wrapExceptionInstance(final Exception e) {
         if (e.getCause() instanceof ClassNotFoundException) {
             baseView.showErrorMessage("Fehler bei der Verbindungerstellung zur Datenbank.");
         } else if (e.getCause() instanceof SQLException) {
             baseView.showErrorMessage("Fehler beim Zugriff auf die Datenbank.");
+        } else if (e.getCause() instanceof NumberFormatException) {
+            baseView.showErrorMessage("Das Format der eingegebenen MessreihenId ist nicht korrekt.");
         }
-        return e;
+        return new RuntimeException(e);
     }
 
 }

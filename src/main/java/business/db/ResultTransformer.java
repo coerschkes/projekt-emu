@@ -7,10 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.function.Function;
 
-public class ResultTransformer {
-    public static Measurement[] toMeasurements(final ResultSet resultSet) {
+class ResultTransformer {
+    static Measurement[] toMeasurements(final ResultSet resultSet) {
         try {
             final Vector<Measurement> measurements = new Vector<Measurement>();
             while (resultSet.next()) {
@@ -23,14 +22,11 @@ public class ResultTransformer {
         }
     }
 
-    public static MeasurementSeries[] toMeasurementSeries(final ResultSet resultSet, final Function<MeasurementSeries, Measurement[]> callback) {
+    static MeasurementSeries[] toMeasurementSeries(final ResultSet resultSet) {
         try {
             ArrayList<MeasurementSeries> allMeasurementSeries = new ArrayList<>();
             while (resultSet.next()) {
                 allMeasurementSeries.add(measurementSeriesFrom(resultSet));
-            }
-            for (MeasurementSeries measurementSeries : allMeasurementSeries) {
-                measurementSeries.setMeasurements(callback.apply(measurementSeries));
             }
             resultSet.close();
             return allMeasurementSeries.toArray(new MeasurementSeries[0]);

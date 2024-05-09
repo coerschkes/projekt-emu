@@ -1,7 +1,7 @@
 package gui;
 
 import business.Measurement;
-import business.db.DbModel;
+import business.db.DatabaseModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class BaseView {
 
-    private DbModel dbModel;
+    private DatabaseModel dbModel;
     private BaseControl baseControl;
 
     private Pane pane = new Pane();
@@ -27,12 +27,12 @@ public class BaseView {
     private Button buttonReadMeasurementsFromDb = new Button("Messungen aus DB lesen");
     private Button buttonReadMeasurementFromEMU = new Button("Messung aus EMU aufnehmen");
 
-    public BaseView(BaseControl baseControl, Stage stage, DbModel dbModel) {
+    public BaseView(BaseControl baseControl, Stage stage, DatabaseModel databaseModel) {
         Scene scene = new Scene(this.pane, 510, 170);
         stage.setScene(scene);
         stage.setTitle("EMU-Anwendung");
         this.baseControl = baseControl;
-        this.dbModel = dbModel;
+        this.dbModel = databaseModel;
         this.initComponents();
         this.initListener();
     }
