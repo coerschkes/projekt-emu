@@ -3,7 +3,6 @@ package business.db;
 import business.model.Measurement;
 import business.model.MeasurementSeries;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 class MeasurementRepositoryImpl implements MeasurementRepository {
@@ -15,14 +14,12 @@ class MeasurementRepositoryImpl implements MeasurementRepository {
 
     @Override
     public Measurement[] readMeasurementsFromSeries(final int measurementSeriesId) throws SQLException, ClassNotFoundException {
-        final ResultSet resultSet = this.mysqlConnector.executeQuery(QueryBuilder.selectMeasurementWithSeriesId(measurementSeriesId));
-        return ResultTransformer.toMeasurements(resultSet);
+        return this.mysqlConnector.executeQuery(QueryBuilder.selectMeasurementWithSeriesId(measurementSeriesId), ResultTransformer::toMeasurements);
     }
 
     @Override
     public MeasurementSeries[] readAllMeasurementSeries() throws SQLException, ClassNotFoundException {
-        final ResultSet resultSet = this.mysqlConnector.executeQuery(QueryBuilder.selectAllMeasurementSeries());
-        final MeasurementSeries[] allMeasurementSeries = ResultTransformer.toMeasurementSeries(resultSet);
+        final MeasurementSeries[] allMeasurementSeries = this.mysqlConnector.executeQuery(QueryBuilder.selectAllMeasurementSeries(), ResultTransformer::toMeasurementSeries);
         for (MeasurementSeries measurementSeries : allMeasurementSeries) {
             measurementSeries.setMeasurements(readMeasurementsFromSeries(measurementSeries.getMeasurementSeriesId()));
         }

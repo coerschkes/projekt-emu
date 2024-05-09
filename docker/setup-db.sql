@@ -4,7 +4,7 @@ create table if not exists emu.measurement
 (
     measurementId       int not null,
     measurementValue double,
-    timeMillis          float,
+    timeMillis          bigint,
     measurementSeriesId int not null,
     primary key (measurementId, measurementSeriesId),
     foreign key (measurementSeriesId) references measurementSeries (measurementSeriesId)

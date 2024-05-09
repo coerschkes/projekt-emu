@@ -35,16 +35,11 @@ class ResultTransformer {
         }
     }
 
-    private static Measurement measurementFrom(ResultSet resultSet) throws SQLException {
-        return new Measurement(
-                Integer.parseInt(resultSet.getString(1)),
-                Double.parseDouble(resultSet.getString(2)),
-                Long.parseLong(resultSet.getString(3)));
+    private static Measurement measurementFrom(final ResultSet resultSet) throws SQLException {
+        return new Measurement(resultSet.getInt(1), resultSet.getDouble(2), resultSet.getLong(3));
     }
 
-    private static MeasurementSeries measurementSeriesFrom(ResultSet resultSet) throws SQLException {
-        return new MeasurementSeries(Integer.parseInt(resultSet.getString(1)),
-                Integer.parseInt(resultSet.getString(2)),
-                resultSet.getString(3), resultSet.getString(4));
+    private static MeasurementSeries measurementSeriesFrom(final ResultSet resultSet) throws SQLException {
+        return new MeasurementSeries(resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4));
     }
 }

@@ -4,17 +4,18 @@ import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 
 import java.sql.*;
+import java.util.function.Function;
 
 @SuppressWarnings("SqlSourceToSinkFlow")
 class MysqlConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(MysqlConnector.class);
     private Connection connection;
 
-    ResultSet executeQuery(final String query) throws SQLException, ClassNotFoundException {
+    <T> T executeQuery(final String query, final Function<ResultSet, T> resultTransformer) throws SQLException, ClassNotFoundException {
         LOGGER.debug("Executing query: " + query);
         this.connect();
         try (final Statement statement = this.connection.createStatement()) {
-            return statement.executeQuery(query);
+            return resultTransformer.apply(statement.executeQuery(query));
         } catch (SQLException e) {
             LOGGER.error("Exception when executing query '" + query + "':", e);
             throw e;
