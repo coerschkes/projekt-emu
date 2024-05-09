@@ -1,15 +1,12 @@
 package gui;
 
-import business.model.Measurement;
 import business.db.DatabaseModel;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import business.model.Measurement;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
 public class BaseControl {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseControl.class);
     private final DatabaseModel databaseModel;
     private final BaseView baseView;
 
@@ -36,12 +33,11 @@ public class BaseControl {
     }
 
     public Measurement readMeasurementFromEmu(String measurementSeriesId, String measurementId) {
-        Measurement result = null;
-        int parsedMeasurementSeriesId = Integer.parseInt(measurementSeriesId);
-        int lfdNr = Integer.parseInt(measurementId);
+        final int parsedMeasurementSeriesId = Integer.parseInt(measurementSeriesId);
+        final int parsedMeasurementId = Integer.parseInt(measurementId);
 
-        // Dummy-Messung-Objekt, muss ersetzt werden !!!
-        result = new Measurement(lfdNr, 0.345, System.currentTimeMillis());
+        // todo: Dummy here, must be substituted
+        final Measurement result = new Measurement(parsedMeasurementId, 0.345, System.currentTimeMillis());
 
         this.saveMeasurement(parsedMeasurementSeriesId, result);
         return result;

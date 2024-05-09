@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 class MeasurementRepositoryImpl implements MeasurementRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MeasurementRepositoryImpl.class);
     private final MysqlConnector mysqlConnector;
 
     MeasurementRepositoryImpl() {

@@ -11,7 +11,7 @@ import java.util.Vector;
 class ResultTransformer {
     static Measurement[] toMeasurements(final ResultSet resultSet) {
         try {
-            final Vector<Measurement> measurements = new Vector<Measurement>();
+            final Vector<Measurement> measurements = new Vector<>();
             while (resultSet.next()) {
                 measurements.add(measurementFrom(resultSet));
             }
