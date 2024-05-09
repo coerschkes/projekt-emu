@@ -1,6 +1,5 @@
 package gui;
 
-import business.db.DatabaseModel;
 import business.model.Measurement;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,25 +11,21 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class BaseView {
+    private final BaseControl baseControl;
+    private final Pane pane = new Pane();
+    private final Label labelMeasurementSeriesId = new Label("MessreihenId");
+    private final Label labelMeasurementId = new Label("lfd. Nr. der Messung");
+    private final TextField textMeasurementSeriesId = new TextField();
+    private final TextField textMeasurementId = new TextField();
+    private final TextField textDisplay = new TextField();
+    private final Button buttonReadMeasurementsFromDb = new Button("Messungen aus DB lesen");
+    private final Button buttonReadMeasurementFromEMU = new Button("Messung aus EMU aufnehmen");
 
-    private DatabaseModel dbModel;
-    private BaseControl baseControl;
-
-    private Pane pane = new Pane();
-    private Label labelMeasurementSeriesId = new Label("MessreihenId");
-    private Label labelMeasurementId = new Label("lfd. Nr. der Messung");
-    private TextField textMeasurementSeriesId = new TextField();
-    private TextField textMeasurementId = new TextField();
-    private TextField textDisplay = new TextField();
-    private Button buttonReadMeasurementsFromDb = new Button("Messungen aus DB lesen");
-    private Button buttonReadMeasurementFromEMU = new Button("Messung aus EMU aufnehmen");
-
-    public BaseView(BaseControl baseControl, Stage stage, DatabaseModel databaseModel) {
+    public BaseView(final BaseControl baseControl, final Stage stage) {
         Scene scene = new Scene(this.pane, 510, 170);
         stage.setScene(scene);
         stage.setTitle("EMU-Anwendung");
         this.baseControl = baseControl;
-        this.dbModel = databaseModel;
         this.initComponents();
         this.initListener();
     }

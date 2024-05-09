@@ -12,7 +12,7 @@ public class BaseControl {
 
     public BaseControl(final Stage primaryStage) {
         this.databaseModel = DatabaseModel.getInstance();
-        this.baseView = new BaseView(this, primaryStage, this.databaseModel);
+        this.baseView = new BaseView(this, primaryStage);
         primaryStage.show();
     }
 
