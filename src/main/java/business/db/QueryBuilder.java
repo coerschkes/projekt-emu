@@ -1,7 +1,7 @@
 package business.db;
 
-import business.Measurement;
-import business.MeasurementSeries;
+import business.model.Measurement;
+import business.model.MeasurementSeries;
 
 class QueryBuilder {
     private static final String QUERY_SELECT_MEASUREMENT_WITH_SERIES_ID = "SELECT * FROM measurement WHERE measurementSeriesId = %s";

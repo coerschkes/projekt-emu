@@ -1,6 +1,6 @@
 package gui;
 
-import business.Measurement;
+import business.model.Measurement;
 import business.db.DatabaseModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -1,7 +1,7 @@
 package business.db;
 
-import business.Measurement;
-import business.MeasurementSeries;
+import business.model.Measurement;
+import business.model.MeasurementSeries;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 

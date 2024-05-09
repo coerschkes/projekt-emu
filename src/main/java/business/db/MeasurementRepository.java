@@ -1,7 +1,7 @@
 package business.db;
 
-import business.Measurement;
-import business.MeasurementSeries;
+import business.model.Measurement;
+import business.model.MeasurementSeries;
 
 import java.sql.SQLException;
 

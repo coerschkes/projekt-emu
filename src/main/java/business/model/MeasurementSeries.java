@@ -1,4 +1,4 @@
-package business;
+package business.model;
 
 
 public class MeasurementSeries {

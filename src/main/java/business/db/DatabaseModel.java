@@ -1,7 +1,7 @@
 package business.db;
 
-import business.Measurement;
-import business.MeasurementSeries;
+import business.model.Measurement;
+import business.model.MeasurementSeries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

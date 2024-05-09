@@ -1,6 +1,6 @@
 package gui;
 
-import business.Measurement;
+import business.model.Measurement;
 import business.db.DatabaseModel;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
