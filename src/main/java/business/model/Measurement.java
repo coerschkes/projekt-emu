@@ -30,4 +30,13 @@ public class Measurement {
     public long getTimeMillis() {
         return timeMillis;
     }
+
+    @Override
+    public String toString() {
+        return "Measurement{" +
+                "measurementId=" + measurementId +
+                ", measurementValue=" + measurementValue +
+                ", timeMillis=" + timeMillis +
+                '}';
+    }
 }

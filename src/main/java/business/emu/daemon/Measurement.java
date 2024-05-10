@@ -1,5 +1,8 @@
-package business.emu;
+package business.emu.daemon;
 
+/**
+ * Reference class for future communication
+ */
 public enum Measurement {
 
     POWER("1.7.1", new byte[]{1, 82, 49, 2, 49, 46, 55, 46, 49, 40, 41, 3}, "W"),

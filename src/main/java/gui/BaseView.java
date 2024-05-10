@@ -27,7 +27,7 @@ public class BaseView {
         stage.setTitle("EMU-Anwendung");
         this.baseControl = baseControl;
         this.initComponents();
-        this.initListener();
+        this.registerListeners();
     }
 
     private void initComponents() {
@@ -55,7 +55,7 @@ public class BaseView {
         pane.getChildren().addAll(buttonReadMeasurementsFromDb, buttonReadMeasurementFromEMU);
     }
 
-    private void initListener() {
+    private void registerListeners() {
         buttonReadMeasurementsFromDb.setOnAction(e -> {
             final Measurement[] resultMeasurements = baseControl.readMeasurements(textMeasurementSeriesId.getText());
             final StringBuilder result = new StringBuilder();
@@ -64,9 +64,19 @@ public class BaseView {
             }
             textDisplay.setText(result.toString());
         });
-        buttonReadMeasurementFromEMU.setOnAction(event -> textDisplay.setText(baseControl
-                .readMeasurementFromEmu(textMeasurementSeriesId.getText(),
-                        textMeasurementId.getText()).getAttributes()));
+        buttonReadMeasurementFromEMU.setOnAction(event -> readMeasurementFromEmu());
+    }
+
+    private void readMeasurementFromEmu() {
+        baseControl
+                .readMeasurementFromEmu(textMeasurementSeriesId.getText(), textMeasurementId.getText())
+                .whenComplete((measurement, throwable) -> {
+                    if (throwable != null) {
+                        showErrorMessage(throwable.getMessage());
+                    } else {
+                        textDisplay.setText(measurement.getAttributes());
+                    }
+                });
     }
 
     void showErrorMessage(String message) {

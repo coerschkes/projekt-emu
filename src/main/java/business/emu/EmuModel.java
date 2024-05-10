@@ -1,10 +1,15 @@
 package business.emu;
 
+import business.emu.daemon.EmuConnector;
+import business.emu.daemon.EmuDevice;
+import business.emu.daemon.EmuInterface;
 import net.sf.yad2xx.FTDIException;
+
+import java.util.concurrent.CompletableFuture;
 
 public class EmuModel {
     private static EmuModel modelInstance;
-    private final EmuConnector emuConnector;
+    private final EmuInterface emuInterface;
 
     public static EmuModel getInstance() {
         if (modelInstance == null) {
@@ -15,18 +20,15 @@ public class EmuModel {
 
     private EmuModel() {
         try {
-            emuConnector = new EmuConnector();
-            emuConnector.connect();
+            emuInterface = new EmuConnector(new EmuDevice());
+            emuInterface.connect();
+            emuInterface.activateProgrammingMode();
         } catch (FTDIException e) {
             throw new RuntimeException(e);
         }
     }
 
-    /*
-     * todo:
-     *      * activate pmode
-     *      * clear buffer
-     *      * read current power value from emu
-     *      * retrieve buffer and store in db
-     */
+    public CompletableFuture<String> readMeasurement() {
+        return emuInterface.getCurrentPower();
+    }
 }
