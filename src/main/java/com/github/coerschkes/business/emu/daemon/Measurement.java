@@ -1,4 +1,4 @@
-package business.emu.daemon;
+package com.github.coerschkes.business.emu.daemon;
 
 /**
  * Reference class for future communication

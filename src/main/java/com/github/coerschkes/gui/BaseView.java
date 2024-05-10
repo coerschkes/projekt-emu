@@ -1,6 +1,6 @@
-package gui;
+package com.github.coerschkes.gui;
 
-import business.model.Measurement;
+import com.github.coerschkes.business.model.Measurement;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

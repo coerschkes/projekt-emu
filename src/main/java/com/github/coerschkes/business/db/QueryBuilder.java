@@ -1,7 +1,7 @@
-package business.db;
+package com.github.coerschkes.business.db;
 
-import business.model.Measurement;
-import business.model.MeasurementSeries;
+import com.github.coerschkes.business.model.Measurement;
+import com.github.coerschkes.business.model.MeasurementSeries;
 
 class QueryBuilder {
     private static final String QUERY_SELECT_MEASUREMENT_WITH_SERIES_ID = "SELECT * FROM measurement WHERE measurementSeriesId = %s";

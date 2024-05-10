@@ -1,8 +1,8 @@
-package gui;
+package com.github.coerschkes.gui;
 
-import business.db.DatabaseModel;
-import business.emu.EmuModel;
-import business.model.Measurement;
+import com.github.coerschkes.business.db.DatabaseModel;
+import com.github.coerschkes.business.emu.EmuModel;
+import com.github.coerschkes.business.model.Measurement;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;

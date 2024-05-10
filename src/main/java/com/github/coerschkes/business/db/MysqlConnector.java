@@ -1,4 +1,4 @@
-package business.db;
+package com.github.coerschkes.business.db;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;

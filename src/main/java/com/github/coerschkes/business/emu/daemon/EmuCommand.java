@@ -1,4 +1,4 @@
-package business.emu.daemon;
+package com.github.coerschkes.business.emu.daemon;
 
 enum EmuCommand {
     END_COMMUNICATION(new byte[]{0x01, 0x42, 0x30, 0x03}, "Connection closed"),

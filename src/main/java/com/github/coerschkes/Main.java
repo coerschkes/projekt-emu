@@ -1,4 +1,6 @@
-import gui.BaseControl;
+package com.github.coerschkes;
+
+import com.github.coerschkes.gui.BaseControl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

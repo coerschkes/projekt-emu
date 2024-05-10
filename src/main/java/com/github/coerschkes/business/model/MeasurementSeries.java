@@ -1,4 +1,4 @@
-package business.model;
+package com.github.coerschkes.business.model;
 
 
 public class MeasurementSeries {

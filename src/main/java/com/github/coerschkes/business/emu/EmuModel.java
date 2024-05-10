@@ -1,8 +1,8 @@
-package business.emu;
+package com.github.coerschkes.business.emu;
 
-import business.emu.daemon.EmuConnector;
-import business.emu.daemon.EmuDevice;
-import business.emu.daemon.EmuInterface;
+import com.github.coerschkes.business.emu.daemon.EmuConnector;
+import com.github.coerschkes.business.emu.daemon.EmuDevice;
+import com.github.coerschkes.business.emu.daemon.EmuInterface;
 import net.sf.yad2xx.FTDIException;
 
 import java.util.concurrent.CompletableFuture;
