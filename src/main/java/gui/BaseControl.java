@@ -47,7 +47,8 @@ public class BaseControl {
             if (throwable != null) {
                 future.completeExceptionally(throwable);
             } else {
-                final Measurement result = new Measurement(parsedMeasurementId, Double.parseDouble(measurementValue.substring(7, 13)), System.currentTimeMillis());
+                final String formattedValue = measurementValue.substring(measurementValue.indexOf("(") + 1, measurementValue.indexOf("*"));
+                final Measurement result = new Measurement(parsedMeasurementId, Double.parseDouble(formattedValue), System.currentTimeMillis());
                 this.saveMeasurement(parsedMeasurementSeriesId, result);
                 future.complete(result);
             }
