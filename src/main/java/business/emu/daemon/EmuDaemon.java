@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 class EmuDaemon extends Thread {
-    private static final long COMMUNICATION_TIMEOUT = 1000;
+    private static final long COMMUNICATION_TIMEOUT = 200;
 
     private final StringBuffer buffer = new StringBuffer();
     private final Queue<EmuCommand> commandQueue = new LinkedList<>();
