@@ -47,8 +47,7 @@ public class BaseControl {
             if (throwable != null) {
                 future.completeExceptionally(throwable);
             } else {
-                //todo: fix right format of value -> NumberFormatException on parsing double atm
-                final Measurement result = new Measurement(parsedMeasurementId, Double.parseDouble(measurementValue), System.currentTimeMillis());
+                final Measurement result = new Measurement(parsedMeasurementId, Double.parseDouble(measurementValue.substring(7, 13)), System.currentTimeMillis());
                 this.saveMeasurement(parsedMeasurementSeriesId, result);
                 future.complete(result);
             }
