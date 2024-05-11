@@ -2,7 +2,7 @@ create database if not exists emu;
 
 create table if not exists emu.measurement
 (
-    measurementId       int not null,
+    measurementId       int not null auto_increment,
     measurementValue double,
     timeMillis          bigint,
     measurementSeriesId int not null,

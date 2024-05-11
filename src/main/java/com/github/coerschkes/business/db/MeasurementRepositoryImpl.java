@@ -28,7 +28,6 @@ class MeasurementRepositoryImpl implements MeasurementRepository {
 
     @Override
     public void saveMeasurement(final int measurementSeriesId, final Measurement measurement) throws SQLException, ClassNotFoundException {
-        System.out.println("Executing update on db: " + QueryBuilder.insertIntoMeasurement(measurement, measurementSeriesId));
         this.mysqlConnector.executeUpdate(QueryBuilder.insertIntoMeasurement(measurement, measurementSeriesId));
     }
 

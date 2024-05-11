@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.coerschkes.gui.BaseViewFxml">
+            fx:controller="com.github.coerschkes.gui.BaseView">
     <center>
         <Pane prefHeight="490.0" prefWidth="750.0" BorderPane.alignment="CENTER">
             <Label layoutX="20.0" layoutY="20.0" text="Eingabe einer Messreihe">
@@ -30,7 +30,7 @@
                     <Font name="System Bold" size="24.0"/>
                 </font>
             </Label>
-            <Button layoutX="402.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
+            <Button onAction="#addMeasurement" layoutX="402.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
                     text="Messung erstellen"/>
             <Button onAction="#readAllMeasurementSeries" layoutX="570.0" layoutY="444.0" mnemonicParsing="false"
                     prefHeight="25.0" prefWidth="150"

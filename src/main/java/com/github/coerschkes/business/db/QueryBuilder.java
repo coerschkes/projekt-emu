@@ -5,7 +5,7 @@ import com.github.coerschkes.business.model.MeasurementSeries;
 
 class QueryBuilder {
     private static final String QUERY_SELECT_MEASUREMENT_WITH_SERIES_ID = "SELECT * FROM measurement WHERE measurementSeriesId = %s";
-    private static final String QUERY_INSERT_INTO_MEASUREMENT = "INSERT INTO measurement (measurementId, measurementValue, timeMillis, measurementSeriesId) VALUES(%s, %s, %s, %s)";
+    private static final String QUERY_INSERT_INTO_MEASUREMENT = "INSERT INTO measurement (measurementValue, timeMillis, measurementSeriesId) VALUES(%s, %s, %s)";
     private static final String QUERY_SELECT_ALL_MEASUREMENT_SERIES = "SELECT * FROM measurementSeries";
     private static final String QUERY_INSERT_INTO_MEASUREMENT_SERIES = "INSERT INTO measurementSeries (measurementSeriesId, timeInterval, consumer, measurementSize) VALUES(%s, %s, '%s', '%s')";
 
@@ -15,7 +15,7 @@ class QueryBuilder {
     }
 
     static String insertIntoMeasurement(final Measurement measurement, final int measurementSeriesId) {
-        return String.format(QUERY_INSERT_INTO_MEASUREMENT, measurement.getMeasurementId(), measurement.getMeasurementValue(), measurement.getTimeMillis(), measurementSeriesId);
+        return String.format(QUERY_INSERT_INTO_MEASUREMENT, measurement.getMeasurementValue(), measurement.getTimeMillis(), measurementSeriesId);
     }
 
     static String selectAllMeasurementSeries() {
