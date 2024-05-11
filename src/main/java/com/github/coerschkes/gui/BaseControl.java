@@ -3,20 +3,27 @@ package com.github.coerschkes.gui;
 import com.github.coerschkes.business.db.DatabaseModel;
 import com.github.coerschkes.business.emu.EmuModel;
 import com.github.coerschkes.business.model.Measurement;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 
 public class BaseControl {
     private final DatabaseModel databaseModel;
     private final EmuModel emuModel;
-    private final BaseView baseView;
+//    private final BaseView baseView;
 
-    public BaseControl(final Stage primaryStage) {
+    public BaseControl(final Stage primaryStage) throws IOException {
         this.databaseModel = DatabaseModel.getInstance();
         this.emuModel = EmuModel.getInstance();
-        this.baseView = new BaseView(this, primaryStage);
+        final FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/baseView.fxml"));
+        Scene scene = new Scene(loader.load());
+        primaryStage.setScene(scene);
+//        this.baseView = new BaseView(this, primaryStage);
         primaryStage.show();
     }
 
@@ -58,11 +65,11 @@ public class BaseControl {
 
     private RuntimeException wrapExceptionInstance(final Exception e) {
         if (e.getCause() instanceof ClassNotFoundException) {
-            baseView.showErrorMessage("Fehler bei der Verbindungerstellung zur Datenbank.");
+//            baseView.showErrorMessage("Fehler bei der Verbindungerstellung zur Datenbank.");
         } else if (e.getCause() instanceof SQLException) {
-            baseView.showErrorMessage("Fehler beim Zugriff auf die Datenbank.");
+//            baseView.showErrorMessage("Fehler beim Zugriff auf die Datenbank.");
         } else if (e.getCause() instanceof NumberFormatException) {
-            baseView.showErrorMessage("Das Format der eingegebenen MessreihenId ist nicht korrekt.");
+//            baseView.showErrorMessage("Das Format der eingegebenen MessreihenId ist nicht korrekt.");
         }
         return new RuntimeException(e);
     }

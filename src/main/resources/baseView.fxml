@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.coerschkes.gui.BaseControl">
+            fx:controller="com.github.coerschkes.gui.BaseViewFxml">
     <center>
         <Pane prefHeight="490.0" prefWidth="750.0" BorderPane.alignment="CENTER">
             <Label layoutX="20.0" layoutY="20.0" text="Eingabe einer Messreihe">
@@ -29,11 +29,11 @@
                     <Font name="System Bold" size="24.0"/>
                 </font>
             </Label>
-            <Button fx:id="buttonCreateMeasurement" layoutX="402.0" layoutY="444.0" mnemonicParsing="false"
-                    prefHeight="25.0" prefWidth="150" text="Messung erstellen"/>
+            <Button layoutX="402.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
+                    text="Messung erstellen"/>
             <Button layoutX="570.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
                     text="Messreihen lesen"/>
-            <TableView layoutX="20.0" layoutY="196.0" prefHeight="228.0" prefWidth="701.0">
+            <TableView fx:id="tableContent" layoutX="20.0" layoutY="196.0" prefHeight="228.0" prefWidth="701.0">
                 <columns>
                     <TableColumn prefWidth="115.0" text="Identnummer"/>
                     <TableColumn prefWidth="130.0" text="Zeitintervall"/>
