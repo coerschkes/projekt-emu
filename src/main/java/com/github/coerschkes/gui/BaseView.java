@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +32,15 @@ public class BaseView {
     private TextField textMeasurementSize;
     @FXML
     private TableView<MeasurementSeriesRow> tableContent;
+    @FXML
+    private StackPane rootPane;
 
     public BaseView() {
         this.databaseModel = DatabaseModel.getInstance();
+    }
+
+    public void initialize() throws SQLException, ClassNotFoundException {
+        readAllMeasurementSeries();
     }
 
     public void readAllMeasurementSeries() throws SQLException, ClassNotFoundException {
@@ -48,6 +55,7 @@ public class BaseView {
         if (!(textMeasurementSeriesId.getText().isEmpty() || textTimeInterval.getText().isEmpty() || textConsumer.getText().isEmpty() || textMeasurementSize.getText().isEmpty())) {
             try {
                 databaseModel.saveMeasurementSeries(new MeasurementSeries(textMeasurementSeriesId.getText(), textTimeInterval.getText(), textConsumer.getText(), textMeasurementSize.getText()));
+                readAllMeasurementSeries();
             } catch (Exception e) {
                 handleError(e);
             }
@@ -58,6 +66,7 @@ public class BaseView {
         final MeasurementSeriesRow selectedRow = this.tableContent.getSelectionModel().getSelectedItem();
         if (selectedRow != null) {
             final int measurementSeriesId = selectedRow.getIdentNumber();
+
             EmuModel.getInstance().readMeasurement().whenComplete(onFutureReceived(measurementSeriesId));
         }
     }
