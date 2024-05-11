@@ -2,6 +2,7 @@ package com.github.coerschkes.business.model;
 
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MeasurementSeries {
@@ -36,15 +37,10 @@ public class MeasurementSeries {
         return measurementSize;
     }
 
-    public Measurement[] getMeasurements() {
-        return measurements;
-    }
-
     public String getMeasurementsAsString() {
         return Arrays.stream(measurements)
-                .map(Measurement::getMeasurementValue)
-                .map(Object::toString)
-                .collect(Collectors.joining(" / "));
+                .map(this::getMeasurementStringRepresentation)
+                .collect(Collectors.joining("/"));
     }
 
     public void setMeasurements(Measurement[] measurements) {
@@ -60,5 +56,18 @@ public class MeasurementSeries {
                 ", measurementSize='" + measurementSize + '\'' +
                 ", measurements=" + Arrays.toString(measurements) +
                 '}';
+    }
+
+    private String getMeasurementStringRepresentation(final Measurement measurement) {
+        if (isFirst(measurement)) {
+            return measurement.getMeasurementValue() + " 0 ";
+        } else {
+            return measurement.getMeasurementValue() + " " + measurement.getTimeMillis() + " ";
+        }
+    }
+
+    private boolean isFirst(final Measurement measurement) {
+        Optional<Measurement> first = Arrays.stream(measurements).findFirst();
+        return first.filter(measurement::equals).isPresent();
     }
 }
