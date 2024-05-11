@@ -14,9 +14,15 @@ public class MeasurementSeries {
 
     public MeasurementSeries(int measurementSeriesId, int timeMillis,
                              String consumer, String measurementSize) {
-        super();
         this.measurementSeriesId = measurementSeriesId;
         this.timeMillis = timeMillis;
+        this.consumer = consumer;
+        this.measurementSize = measurementSize;
+    }
+
+    public MeasurementSeries(final String measurementSeriesId, final String timeMillis, final String consumer, final String measurementSize) {
+        this.measurementSeriesId = Integer.parseInt(measurementSeriesId);
+        this.timeMillis = Integer.parseInt(timeMillis);
         this.consumer = consumer;
         this.measurementSize = measurementSize;
     }

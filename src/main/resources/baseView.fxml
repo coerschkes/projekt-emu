@@ -23,7 +23,7 @@
             <TextField fx:id="textTimeInterval" layoutX="206.0" layoutY="105.0" prefHeight="25.0" prefWidth="100.0"/>
             <TextField fx:id="textConsumer" layoutX="421.0" layoutY="66.0" prefHeight="25.0" prefWidth="100.0"/>
             <TextField fx:id="textMeasurementSize" layoutX="421.0" layoutY="105.0" prefHeight="25.0" prefWidth="100.0"/>
-            <Button layoutX="570.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0"
+            <Button onAction="#addMeasurementSeries" layoutX="570.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0"
                     text="Messreihe speichern"/>
             <Label layoutX="20" layoutY="150" text="Anzeige der Messreihen">
                 <font>

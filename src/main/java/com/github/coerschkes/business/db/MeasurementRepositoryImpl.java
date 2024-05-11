@@ -33,7 +33,7 @@ class MeasurementRepositoryImpl implements MeasurementRepository {
     }
 
     @Override
-    public void saveMeasurementSeries(MeasurementSeries measurementSeries) throws SQLException, ClassNotFoundException {
+    public void saveMeasurementSeries(final MeasurementSeries measurementSeries) throws SQLException, ClassNotFoundException {
         this.mysqlConnector.executeUpdate(QueryBuilder.insertIntoMeasurementSeries(measurementSeries));
     }
 }

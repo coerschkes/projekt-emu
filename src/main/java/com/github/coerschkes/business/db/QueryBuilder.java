@@ -7,7 +7,7 @@ class QueryBuilder {
     private static final String QUERY_SELECT_MEASUREMENT_WITH_SERIES_ID = "SELECT * FROM measurement WHERE measurementSeriesId = %s";
     private static final String QUERY_INSERT_INTO_MEASUREMENT = "INSERT INTO measurement (measurementId, measurementValue, timeMillis, measurementSeriesId) VALUES(%s, %s, %s, %s)";
     private static final String QUERY_SELECT_ALL_MEASUREMENT_SERIES = "SELECT * FROM measurementSeries";
-    private static final String QUERY_INSERT_INTO_MEASUREMENT_SERIES = "INSERT INTO measurementSeries (measurementSeriesId, timeInterval, consumer, measurementSize) VALUES(%s, %s, %s, %s)";
+    private static final String QUERY_INSERT_INTO_MEASUREMENT_SERIES = "INSERT INTO measurementSeries (measurementSeriesId, timeInterval, consumer, measurementSize) VALUES(%s, %s, '%s', '%s')";
 
 
     static String selectMeasurementWithSeriesId(final int measurementSeriesId) {
