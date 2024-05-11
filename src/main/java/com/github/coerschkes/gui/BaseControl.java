@@ -14,7 +14,6 @@ import java.util.concurrent.CompletableFuture;
 public class BaseControl {
     private final DatabaseModel databaseModel;
     private final EmuModel emuModel;
-//    private final BaseView baseView;
 
     public BaseControl(final Stage primaryStage) throws IOException {
         this.databaseModel = DatabaseModel.getInstance();
@@ -23,8 +22,8 @@ public class BaseControl {
         loader.setLocation(getClass().getResource("/baseView.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
-//        this.baseView = new BaseView(this, primaryStage);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> emuModel.disconnect());
     }
 
     public Measurement[] readMeasurements(final String measurementSeriesId) {

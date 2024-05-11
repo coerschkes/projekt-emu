@@ -31,4 +31,8 @@ public class EmuModel {
     public CompletableFuture<String> readMeasurement() {
         return emuInterface.getCurrentPower();
     }
+
+    public void disconnect(){
+        emuInterface.disconnect();
+    }
 }

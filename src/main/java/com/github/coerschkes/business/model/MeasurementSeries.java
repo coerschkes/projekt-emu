@@ -1,8 +1,10 @@
 package com.github.coerschkes.business.model;
 
 
-public class MeasurementSeries {
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
+public class MeasurementSeries {
     private final int measurementSeriesId;
     private final int timeMillis;
     private final String consumer;
@@ -38,14 +40,25 @@ public class MeasurementSeries {
         return measurements;
     }
 
+    public String getMeasurementsAsString() {
+        return Arrays.stream(measurements)
+                .map(Measurement::getMeasurementValue)
+                .map(Object::toString)
+                .collect(Collectors.joining(" / "));
+    }
+
     public void setMeasurements(Measurement[] measurements) {
         this.measurements = measurements;
     }
 
-    public String gibAttributeAus() {
-        return (this.measurementSeriesId + " "
-                + this.timeMillis + " " + this.consumer + " "
-                + this.measurementSize);
+    @Override
+    public String toString() {
+        return "MeasurementSeries{" +
+                "measurementSeriesId=" + measurementSeriesId +
+                ", timeMillis=" + timeMillis +
+                ", consumer='" + consumer + '\'' +
+                ", measurementSize='" + measurementSize + '\'' +
+                ", measurements=" + Arrays.toString(measurements) +
+                '}';
     }
-
 }

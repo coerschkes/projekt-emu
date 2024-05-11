@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -31,15 +32,36 @@
             </Label>
             <Button layoutX="402.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
                     text="Messung erstellen"/>
-            <Button layoutX="570.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150"
+            <Button onAction="#readAllMeasurementSeries" layoutX="570.0" layoutY="444.0" mnemonicParsing="false"
+                    prefHeight="25.0" prefWidth="150"
                     text="Messreihen lesen"/>
             <TableView fx:id="tableContent" layoutX="20.0" layoutY="196.0" prefHeight="228.0" prefWidth="701.0">
                 <columns>
-                    <TableColumn prefWidth="115.0" text="Identnummer"/>
-                    <TableColumn prefWidth="130.0" text="Zeitintervall"/>
-                    <TableColumn minWidth="0.0" prefWidth="130.0" text="Verbraucher"/>
-                    <TableColumn prefWidth="152.0" text="Messgröße"/>
-                    <TableColumn prefWidth="173.0" text="Messungen"/>
+                    <TableColumn prefWidth="115.0" text="Identnummer">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="identNumber"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="130.0" text="Zeitintervall">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="timeInterval"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn minWidth="0.0" prefWidth="130.0" text="Verbraucher">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="consumer"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="152.0" text="Messgröße">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="measurementSize"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="173.0" text="Messungen">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="measurements"/>
+                        </cellValueFactory>
+                    </TableColumn>
                 </columns>
             </TableView>
         </Pane>
