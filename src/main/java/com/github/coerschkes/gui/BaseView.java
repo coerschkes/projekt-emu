@@ -1,6 +1,6 @@
 package com.github.coerschkes.gui;
 
-import com.github.coerschkes.business.db.DatabaseModel;
+import com.github.coerschkes.business.db.AsyncDatabaseModel;
 import com.github.coerschkes.business.emu.EmuModel;
 import com.github.coerschkes.business.model.Measurement;
 import com.github.coerschkes.business.model.MeasurementSeries;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class BaseView {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseView.class);
-    private final DatabaseModel databaseModel;
+    private final AsyncDatabaseModel databaseModel;
 
     @FXML
     private TextField textMeasurementSeriesId;
@@ -36,25 +36,32 @@ public class BaseView {
     private StackPane rootPane;
 
     public BaseView() {
-        this.databaseModel = DatabaseModel.getInstance();
+        this.databaseModel = AsyncDatabaseModel.getInstance();
     }
 
     public void initialize() throws SQLException, ClassNotFoundException {
         readAllMeasurementSeries();
     }
 
-    public void readAllMeasurementSeries() throws SQLException, ClassNotFoundException {
-        MeasurementSeries[] measurementSeries = this.databaseModel.readAllMeasurementSeries();
-        tableContent.getItems().clear();
-        tableContent.setItems(FXCollections.observableList(Arrays.stream(measurementSeries)
-                .map(MeasurementSeriesRow::of)
-                .collect(Collectors.toList())));
+    public void readAllMeasurementSeries() {
+        this.databaseModel.readAllMeasurementSeries().whenComplete((measurementSeries, throwable) -> {
+            if (throwable != null) {
+                this.handleError(throwable);
+            } else {
+                tableContent.getItems().clear();
+                tableContent.setItems(FXCollections.observableList(Arrays.stream(measurementSeries)
+                        .map(MeasurementSeriesRow::of)
+                        .collect(Collectors.toList())));
+            }
+        });
     }
 
     public void addMeasurementSeries() {
         if (!(textMeasurementSeriesId.getText().isEmpty() || textTimeInterval.getText().isEmpty() || textConsumer.getText().isEmpty() || textMeasurementSize.getText().isEmpty())) {
             try {
-                databaseModel.saveMeasurementSeries(new MeasurementSeries(textMeasurementSeriesId.getText(), textTimeInterval.getText(), textConsumer.getText(), textMeasurementSize.getText()));
+                databaseModel.saveMeasurementSeries(createMeasurementSeries()).whenComplete((unused, throwable) -> {
+                    readAllMeasurementSeries();
+                });
                 readAllMeasurementSeries();
             } catch (Exception e) {
                 handleError(e);
@@ -67,28 +74,37 @@ public class BaseView {
         if (selectedRow != null) {
             final int measurementSeriesId = selectedRow.getIdentNumber();
 
-            EmuModel.getInstance().readMeasurement().whenComplete(onFutureReceived(measurementSeriesId));
+            EmuModel.getInstance().readMeasurement().whenComplete(onMeasurementReceived(measurementSeriesId));
         }
     }
 
-    private BiConsumer<String, Throwable> onFutureReceived(final int measurementSeriesId) {
+    private BiConsumer<String, Throwable> onMeasurementReceived(final int measurementSeriesId) {
         return (value, throwable) -> {
             if (throwable != null) {
                 handleError(throwable);
             } else {
-                try {
-                    final String formattedValue = value.substring(value.indexOf("(") + 1, value.indexOf("*"));
-                    final Measurement result = new Measurement(0, Double.parseDouble(formattedValue), System.currentTimeMillis());
-                    databaseModel.saveMeasurement(measurementSeriesId, result);
-                    readAllMeasurementSeries();
-                } catch (Exception e) {
-                    handleError(e);
-                }
+                final String formattedValue = value.substring(value.indexOf("(") + 1, value.indexOf("*"));
+                saveMeasurement(measurementSeriesId, new Measurement(0, measurementSeriesId, Double.parseDouble(formattedValue), System.currentTimeMillis()));
             }
         };
     }
 
-    private void handleError(final Throwable e) {
+    private void saveMeasurement(final int measurementSeriesId, final Measurement measurement) {
+        databaseModel.saveMeasurement(measurementSeriesId, measurement).whenComplete((unused, throwable) -> {
+            if (throwable != null) {
+                handleError(throwable);
+            } else {
+                readAllMeasurementSeries();
+            }
+        });
+    }
+
+    //todo: check if text can be set numeric only
+    private MeasurementSeries createMeasurementSeries() {
+        return new MeasurementSeries(Integer.parseInt(textMeasurementSeriesId.getText()), Integer.parseInt(textTimeInterval.getText()), textConsumer.getText(), textMeasurementSize.getText());
+    }
+
+    public void handleError(final Throwable e) {
         LOGGER.error("Error during execution", e);
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Fehlermeldung");

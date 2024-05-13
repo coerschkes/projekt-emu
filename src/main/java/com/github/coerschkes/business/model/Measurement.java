@@ -1,14 +1,21 @@
 package com.github.coerschkes.business.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Measurement {
 
     private final int measurementId;
+    private final int measurementSeriesId;
     private final double measurementValue;
     private final long timeMillis;
 
-    public Measurement(final int measurementId, final double measurementValue, final long timeMillis) {
+    public Measurement(final @JsonProperty("measurementId") int measurementId,
+                       final @JsonProperty("measurementSeriesId") int measurementSeriesId,
+                       final @JsonProperty("measurementValue") double measurementValue,
+                       final @JsonProperty("timeMillis") long timeMillis) {
         super();
         this.measurementId = measurementId;
+        this.measurementSeriesId = measurementSeriesId;
         this.measurementValue = measurementValue;
         this.timeMillis = timeMillis;
     }
@@ -23,7 +30,7 @@ public class Measurement {
     }
 
 
-    public String getAttributes() {
+    public String concatAttributes() {
         return this.measurementId + ": " + this.measurementValue;
     }
 
@@ -38,5 +45,9 @@ public class Measurement {
                 ", measurementValue=" + measurementValue +
                 ", timeMillis=" + timeMillis +
                 '}';
+    }
+
+    public int getMeasurementSeriesId() {
+        return measurementSeriesId;
     }
 }

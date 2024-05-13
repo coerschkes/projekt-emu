@@ -26,7 +26,7 @@ public class MeasurementSeriesRow {
                 measurementSeries.getTimeMillis(),
                 measurementSeries.getConsumer(),
                 measurementSeries.getMeasurementSize(),
-                measurementSeries.getMeasurementsAsString()
+                measurementSeries.measurementsStringRepresentation()
         );
     }
 

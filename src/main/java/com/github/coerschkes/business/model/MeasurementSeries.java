@@ -1,6 +1,8 @@
 package com.github.coerschkes.business.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,17 +14,13 @@ public class MeasurementSeries {
     private final String measurementSize;
     private Measurement[] measurements;
 
-    public MeasurementSeries(int measurementSeriesId, int timeMillis,
-                             String consumer, String measurementSize) {
+    public MeasurementSeries(final @JsonProperty("measurementSeriesId") int measurementSeriesId,
+                             final @JsonProperty("timeMillis") int timeMillis,
+                             final @JsonProperty("consumer") String consumer,
+                             final @JsonProperty("measurementSize") String measurementSize) {
+        super();
         this.measurementSeriesId = measurementSeriesId;
         this.timeMillis = timeMillis;
-        this.consumer = consumer;
-        this.measurementSize = measurementSize;
-    }
-
-    public MeasurementSeries(final String measurementSeriesId, final String timeMillis, final String consumer, final String measurementSize) {
-        this.measurementSeriesId = Integer.parseInt(measurementSeriesId);
-        this.timeMillis = Integer.parseInt(timeMillis);
         this.consumer = consumer;
         this.measurementSize = measurementSize;
     }
@@ -43,10 +41,14 @@ public class MeasurementSeries {
         return measurementSize;
     }
 
-    public String getMeasurementsAsString() {
-        return Arrays.stream(measurements)
-                .map(this::getMeasurementStringRepresentation)
-                .collect(Collectors.joining("/"));
+    public String measurementsStringRepresentation() {
+        if (measurements == null) {
+            return null;
+        } else {
+            return Arrays.stream(measurements)
+                    .map(this::getMeasurementStringRepresentation)
+                    .collect(Collectors.joining("/"));
+        }
     }
 
     public void setMeasurements(Measurement[] measurements) {
