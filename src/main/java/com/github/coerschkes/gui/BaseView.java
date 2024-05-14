@@ -74,7 +74,7 @@ public class BaseView {
             if (e.getCause() instanceof RequestFailedException) {
                 return "Request failed with error: " + e.getMessage();
             } else if (e.getCause() instanceof ProcessingException) {
-                return "Unable to connect to the database";
+                return "Unable to connect to the service";
             }
         }
         return "Unknown error. Please view log for detailed information";
