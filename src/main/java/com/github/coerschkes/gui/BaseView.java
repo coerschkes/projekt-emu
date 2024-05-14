@@ -1,6 +1,5 @@
 package com.github.coerschkes.gui;
 
-import com.github.coerschkes.business.model.Measurement;
 import com.github.coerschkes.business.model.MeasurementSeries;
 import com.github.coerschkes.business.util.RequestFailedException;
 import com.github.coerschkes.gui.util.MeasurementSeriesRow;
@@ -56,15 +55,14 @@ public class BaseView {
     public void addMeasurement() {
         final MeasurementSeriesRow selectedRow = this.tableContent.getSelectionModel().getSelectedItem();
         if (selectedRow != null) {
-            final Measurement stubMeasurement = new Measurement(0, selectedRow.getIdentNumber(), 4.3, 1598025052);
-            reactiveControl.saveMeasurement(stubMeasurement, this::readAllMeasurementSeries);
+            reactiveControl.readMeasurement(measurement -> reactiveControl.saveMeasurement(measurement, this::readAllMeasurementSeries));
         }
     }
 
-    public void showError(final Throwable e) {
+    private void showError(final Throwable e) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehlermeldung");
+            alert.setTitle("Error");
             alert.setContentText(mapExceptionMessage(e));
             System.out.println(e.getCause().getLocalizedMessage());
             alert.showAndWait();
@@ -77,15 +75,11 @@ public class BaseView {
                 return "Request failed with error: " + e.getMessage();
             } else if (e.getCause() instanceof ProcessingException) {
                 return "Unable to connect to the database";
-            } else {
-                return "Unknown error. Please view the log for detailed information.";
             }
-        } else {
-            return "Unkonw error. Plese view log for detailed information";
         }
+        return "Unknown error. Please view log for detailed information";
     }
 
-    //todo: check if text can be set numeric only
     private MeasurementSeries buildMeasurementSeries() {
         return new MeasurementSeries(Integer.parseInt(textMeasurementSeriesId.getText()), Integer.parseInt(textTimeInterval.getText()), textConsumer.getText(), textMeasurementSize.getText());
     }

@@ -1,6 +1,7 @@
 package com.github.coerschkes.gui;
 
 import com.github.coerschkes.business.db.AsyncDatabaseModel;
+import com.github.coerschkes.business.emu.AsyncEmuModel;
 import com.github.coerschkes.business.model.Measurement;
 import com.github.coerschkes.business.model.MeasurementSeries;
 import org.slf4j.Logger;
@@ -11,10 +12,12 @@ import java.util.function.Consumer;
 public class ReactiveControl {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveControl.class);
     private final AsyncDatabaseModel asyncDatabaseModel;
+    private final AsyncEmuModel asyncEmuModel;
     private final Consumer<Throwable> errorHandler;
 
     public ReactiveControl(final Consumer<Throwable> errorHandler) {
         this.asyncDatabaseModel = AsyncDatabaseModel.getInstance();
+        this.asyncEmuModel = AsyncEmuModel.getInstance();
         this.errorHandler = errorHandler;
     }
 
@@ -47,6 +50,16 @@ public class ReactiveControl {
             }
         });
 
+    }
+
+    public void readMeasurement(final Consumer<Measurement> callbackOnCompletion) {
+        asyncEmuModel.readMeasurement().whenComplete((measurement, throwable) -> {
+            if (throwable != null) {
+                handleThrowable(throwable);
+            } else {
+                callbackOnCompletion.accept(measurement);
+            }
+        });
     }
 
     private void handleThrowable(final Throwable throwable) {
