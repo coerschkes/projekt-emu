@@ -2,7 +2,6 @@ package com.github.coerschkes.business.emu;
 
 import com.github.coerschkes.business.BaseAsyncRemoteRepository;
 import com.github.coerschkes.business.model.Measurement;
-import com.github.coerschkes.business.util.GenericObjectMapper;
 
 import javax.ws.rs.core.Response;
 import java.util.concurrent.CompletableFuture;
@@ -16,9 +15,6 @@ public class AsyncEmuRemoteRepository extends BaseAsyncRemoteRepository implemen
 
     @Override
     public CompletableFuture<Measurement> readMeasurement() {
-        return CompletableFuture
-                .supplyAsync(() ->
-                        GenericObjectMapper.fromJson(handleResponseStatus(getInvocationBuilder("measurement")
-                                .get(), Response.Status.OK).readEntity(String.class), Measurement.class));
+        return asyncRequestBuilder.GET("measurement", Response.Status.OK, Measurement.class);
     }
 }
