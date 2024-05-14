@@ -1,8 +1,8 @@
 package com.github.coerschkes.gui;
 
-import com.github.coerschkes.business.db.RequestFailedException;
 import com.github.coerschkes.business.model.Measurement;
 import com.github.coerschkes.business.model.MeasurementSeries;
+import com.github.coerschkes.business.util.RequestFailedException;
 import com.github.coerschkes.gui.util.MeasurementSeriesRow;
 import com.github.coerschkes.gui.util.NumericTextFormatter;
 import javafx.application.Platform;

@@ -3,6 +3,7 @@ package com.github.coerschkes.business.db;
 import com.github.coerschkes.business.model.Measurement;
 import com.github.coerschkes.business.model.MeasurementSeries;
 import com.github.coerschkes.business.util.GenericObjectMapper;
+import com.github.coerschkes.business.util.RequestFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
