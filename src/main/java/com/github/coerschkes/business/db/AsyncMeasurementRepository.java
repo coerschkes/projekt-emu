@@ -24,11 +24,10 @@ public interface AsyncMeasurementRepository {
     /**
      * Saves a {@link Measurement} to the database and returns a {@link CompletableFuture<Void>}
      *
-     * @param measurementSeriesId - database ID of the {@link MeasurementSeries} to read
      * @param measurement         - the {@link Measurement} to save
      * @return {@link CompletableFuture<Void>}
      */
-    CompletableFuture<Void> saveMeasurement(final int measurementSeriesId, final Measurement measurement);
+    CompletableFuture<Void> saveMeasurement(final Measurement measurement);
 
     /**
      * Saves a {@link MeasurementSeries} to the database and returns a {@link CompletableFuture<Void>}

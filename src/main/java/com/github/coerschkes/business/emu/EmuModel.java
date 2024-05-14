@@ -11,12 +11,12 @@ public class EmuModel {
     private static EmuModel modelInstance;
     private final EmuInterface emuInterface;
 
-    public static EmuModel getInstance() {
-        if (modelInstance == null) {
-            modelInstance = new EmuModel();
-        }
-        return modelInstance;
-    }
+//    public static EmuModel getInstance() {
+//        if (modelInstance == null) {
+//            modelInstance = new EmuModel();
+//        }
+//        return modelInstance;
+//    }
 
     private EmuModel() {
         try {

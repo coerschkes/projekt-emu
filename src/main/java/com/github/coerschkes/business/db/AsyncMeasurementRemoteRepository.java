@@ -35,7 +35,7 @@ public class AsyncMeasurementRemoteRepository implements AsyncMeasurementReposit
     }
 
     @Override
-    public CompletableFuture<Void> saveMeasurement(final int measurementSeriesId, final Measurement measurement) {
+    public CompletableFuture<Void> saveMeasurement(final Measurement measurement) {
         return CompletableFuture.runAsync(() ->
                 handleResponseStatus(getInvocationBuilder("measurementSeries/" + measurement.getMeasurementSeriesId())
                         .post(Entity.json(GenericObjectMapper.toJson(measurement))), Response.Status.CREATED)

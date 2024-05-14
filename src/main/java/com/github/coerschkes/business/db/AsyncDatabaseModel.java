@@ -20,12 +20,8 @@ public final class AsyncDatabaseModel {
         repository = new AsyncMeasurementRemoteRepository();
     }
 
-    public CompletableFuture<Measurement[]> readMeasurementsFromDb(final int measurementSeriesId) {
-        return repository.readMeasurementsFromSeries(measurementSeriesId);
-    }
-
-    public CompletableFuture<Void> saveMeasurement(final int measurementSeriesId, final Measurement measurement) {
-        return repository.saveMeasurement(measurementSeriesId, measurement);
+    public CompletableFuture<Void> saveMeasurement(final Measurement measurement) {
+        return repository.saveMeasurement(measurement);
     }
 
     public CompletableFuture<MeasurementSeries[]> readAllMeasurementSeries() {
