@@ -1,4 +1,4 @@
-package com.github.coerschkes.gui;
+package com.github.coerschkes.gui.util;
 
 import com.github.coerschkes.business.model.MeasurementSeries;
 import javafx.beans.property.SimpleIntegerProperty;

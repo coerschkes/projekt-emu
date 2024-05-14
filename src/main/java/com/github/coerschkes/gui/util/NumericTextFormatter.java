@@ -1,4 +1,4 @@
-package com.github.coerschkes.gui;
+package com.github.coerschkes.gui.util;
 
 import javafx.scene.control.TextFormatter;
 
