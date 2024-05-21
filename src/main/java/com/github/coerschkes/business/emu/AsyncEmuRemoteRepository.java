@@ -15,6 +15,6 @@ public class AsyncEmuRemoteRepository extends BaseAsyncRemoteRepository implemen
 
     @Override
     public CompletableFuture<Measurement> readMeasurement() {
-        return asyncRequestBuilder.GET("measurement", Response.Status.OK, Measurement.class);
+        return asyncRequestBuilder.GET("emu/power", Response.Status.OK, Measurement.class);
     }
 }
