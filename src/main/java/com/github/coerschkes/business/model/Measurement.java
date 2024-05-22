@@ -20,6 +20,10 @@ public class Measurement {
         this.timeMillis = timeMillis;
     }
 
+    public Measurement withMeasurementSeriesId(final int measurementSeriesId) {
+        return new Measurement(measurementId, measurementSeriesId, measurementValue, timeMillis);
+    }
+
     public int getMeasurementId() {
         return measurementId;
     }

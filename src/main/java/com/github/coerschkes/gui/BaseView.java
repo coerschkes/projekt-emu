@@ -55,7 +55,9 @@ public class BaseView {
     public void addMeasurement() {
         final MeasurementSeriesRow selectedRow = this.tableContent.getSelectionModel().getSelectedItem();
         if (selectedRow != null) {
-            reactiveControl.readMeasurement(measurement -> reactiveControl.saveMeasurement(measurement, this::readAllMeasurementSeries));
+            reactiveControl.readMeasurement(measurement -> {
+                reactiveControl.saveMeasurement(measurement.withMeasurementSeriesId(selectedRow.getIdentNumber()), this::readAllMeasurementSeries);
+            });
         }
     }
 
