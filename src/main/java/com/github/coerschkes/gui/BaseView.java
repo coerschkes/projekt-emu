@@ -72,7 +72,7 @@ public class BaseView {
     private String mapExceptionMessage(final Throwable e) {
         if (e.getCause() != null) {
             if (e.getCause() instanceof RequestFailedException) {
-                return "Request failed with error: " + e.getMessage();
+                return e.getCause().getMessage();
             } else if (e.getCause() instanceof ProcessingException) {
                 return "Unable to connect to the service";
             }
