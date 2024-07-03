@@ -55,6 +55,10 @@ public class MeasurementSeries {
         this.measurements = measurements;
     }
 
+    public Measurement[] getMeasurements() {
+        return measurements;
+    }
+
     @Override
     public String toString() {
         return "MeasurementSeries{" +
@@ -68,9 +72,9 @@ public class MeasurementSeries {
 
     private String getMeasurementStringRepresentation(final Measurement measurement) {
         if (isFirst(measurement)) {
-            return measurement.getMeasurementValue() + " 0 ";
+            return measurement.getMeasurementValue() + " 0";
         } else {
-            return measurement.getMeasurementValue() + " " + measurement.getTimeMillis() + " ";
+            return measurement.getMeasurementValue() + " " + measurement.getTimeMillis();
         }
     }
 
