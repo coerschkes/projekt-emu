@@ -35,7 +35,7 @@ public class AsyncMeasurementRemoteRepository extends BaseAsyncRemoteRepository 
     }
 
     @Override
-    public CompletableFuture<Void> deleteMeasurementsFromSeries(int measurementSeriesId) {
+    public CompletableFuture<Void> deleteMeasurementSeries(int measurementSeriesId) {
         return asyncRequestBuilder.DELETE("measurementSeries/" + measurementSeriesId, Response.Status.NO_CONTENT);
     }
 }

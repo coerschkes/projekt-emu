@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class MeasurementRunSteps {
     private static final double STATIC_MEASUREMENT_VALUE = 2.4;
+    static final int[] MEASUREMENT_SERIES_IDS = {1000, 1001, 1002};
     private MeasurementSeries[] allMeasurementSeries;
     private MeasurementSeries measurementSeries;
     private List<Exception> exceptionRecord;
@@ -28,16 +29,19 @@ public class MeasurementRunSteps {
         this.allMeasurementSeries = null;
         this.measurementSeries = null;
         this.exceptionRecord = new ArrayList<>();
-        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, 2, 3.0, System.currentTimeMillis())).join();
-        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, 3, 3.0, System.currentTimeMillis())).join();
-        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, 3, 3.0, System.currentTimeMillis() + 20000)).join();
+        AsyncDatabaseModel.getInstance().saveMeasurementSeries(new MeasurementSeries(MEASUREMENT_SERIES_IDS[0], 20000, "LED", "Leistung")).join();
+        AsyncDatabaseModel.getInstance().saveMeasurementSeries(new MeasurementSeries(MEASUREMENT_SERIES_IDS[1], 10000, "Laptop", "Leistung")).join();
+        AsyncDatabaseModel.getInstance().saveMeasurementSeries(new MeasurementSeries(MEASUREMENT_SERIES_IDS[2], 5000, "Ladegerät", "Leistung")).join();
+        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, MEASUREMENT_SERIES_IDS[1], 3.0, System.currentTimeMillis())).join();
+        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, MEASUREMENT_SERIES_IDS[2], 3.0, System.currentTimeMillis())).join();
+        AsyncDatabaseModel.getInstance().saveMeasurement(new Measurement(0, MEASUREMENT_SERIES_IDS[2], 3.0, System.currentTimeMillis() + 6000)).join();
     }
 
     @After
     public void tearDown() {
-        AsyncDatabaseModel.getInstance().deleteMeasurementsFromSeries(1).join();
-        AsyncDatabaseModel.getInstance().deleteMeasurementsFromSeries(2).join();
-        AsyncDatabaseModel.getInstance().deleteMeasurementsFromSeries(3).join();
+        for (int id : MEASUREMENT_SERIES_IDS) {
+            AsyncDatabaseModel.getInstance().deleteMeasurementSeries(id).join();
+        }
     }
 
     @Given("Messreihen ansehen")

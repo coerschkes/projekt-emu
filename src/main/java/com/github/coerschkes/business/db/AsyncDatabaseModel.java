@@ -28,11 +28,12 @@ public final class AsyncDatabaseModel {
         return repository.readMeasurementSeries();
     }
 
-    public CompletableFuture<Void> deleteMeasurementsFromSeries(final int measurementSeriesId) {
-        return repository.deleteMeasurementsFromSeries(measurementSeriesId);
-    }
-
     public CompletableFuture<Void> saveMeasurementSeries(final MeasurementSeries measurementSeries) {
         return this.repository.saveMeasurementSeries(measurementSeries);
     }
+
+    public CompletableFuture<Void> deleteMeasurementSeries(final int measurementSeriesId) {
+        return repository.deleteMeasurementSeries(measurementSeriesId);
+    }
+
 }

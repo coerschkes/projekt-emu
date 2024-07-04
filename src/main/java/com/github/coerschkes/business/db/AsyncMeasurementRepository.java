@@ -37,5 +37,5 @@ public interface AsyncMeasurementRepository {
      */
     CompletableFuture<Void> saveMeasurementSeries(final MeasurementSeries measurementSeries);
 
-    CompletableFuture<Void> deleteMeasurementsFromSeries(int measurementSeriesId);
+    CompletableFuture<Void> deleteMeasurementSeries(int measurementSeriesId);
 }
