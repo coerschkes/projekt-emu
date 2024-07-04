@@ -33,6 +33,13 @@ public class AsyncRequestBuilder {
         );
     }
 
+    public CompletableFuture<Void> DELETE(final String path, final Response.Status happyPathStatus) {
+        return CompletableFuture.runAsync(() ->
+                errorHandler.apply(getInvocationBuilder(path)
+                        .delete(), happyPathStatus)
+        );
+    }
+
     protected Invocation.Builder getInvocationBuilder(final String path) {
         return webTarget.path(path).request(MediaType.APPLICATION_JSON);
     }
