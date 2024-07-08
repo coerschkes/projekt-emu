@@ -1,0 +1,8 @@
+einfache Bedingunsüberdeckung:
+2
+
+minimale Bedingungsüberdeckung:
+3
+
+mehrfache Bedingungsüberdeckung:
+3
