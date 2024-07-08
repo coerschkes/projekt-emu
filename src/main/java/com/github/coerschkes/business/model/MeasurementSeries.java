@@ -25,6 +25,20 @@ public class MeasurementSeries {
         this.measurementSize = measurementSize;
     }
 
+    public MeasurementSeries(int measurementSeriesId, int timeMillis) throws IllegalArgumentException {
+        super();
+        this.measurementSeriesId = measurementSeriesId;
+        if (timeMillis >= 15 && timeMillis <= 3600) {
+            this.timeMillis = timeMillis;
+        } else if (timeMillis < 15) {
+            throw new IllegalArgumentException("Das Zeitintervall muss mindestens 15 Sekunden lang sein.");
+        } else {
+            throw new IllegalArgumentException("Das Zeitintervall darf hoechstens 3600 Sekunden lang sein.");
+        }
+        this.consumer = "DEFAULT";
+        this.measurementSize = "Leistung";
+    }
+
     public int getMeasurementSeriesId() {
         return measurementSeriesId;
     }
